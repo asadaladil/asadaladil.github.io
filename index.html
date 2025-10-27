@@ -1,147 +1,491 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md. Asad-Al-Adil</title>
+    <title>Your Name - Professional Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles for Animations and Gradients -->
     <style>
-        /* --- Basic Reset --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
-        }
-
         body {
-            background-color: #f5f5f5;
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a; /* bg-slate-900 */
+            color: #cbd5e1; /* text-slate-300 */
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background-image: linear-gradient(to right, #60a5fa, #34d399); /* from-blue-400 to-emerald-400 */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Active Nav Link Style */
+        .nav-link-active {
+            color: #60a5fa; /* text-blue-400 */
+            position: relative;
+        }
+        
+        .nav-link-active::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 2px;
+            background-color: #60a5fa; /* bg-blue-400 */
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        /* Page Fade-in Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page-section {
+            display: none; /* Hidden by default, JS will manage this */
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        /* Keyframe for nav link active state */
+        @keyframes slideIn {
+            from { width: 0; }
+            to { width: 100%; }
         }
 
-        header {
-            background: #2b2d42;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
+        /* Timeline styles for Experience/Education */
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem; /* pl-10 */
+            padding-bottom: 2rem; /* pb-8 */
+            border-left: 2px solid #334155; /* border-slate-700 */
         }
-
-        header h1 {
-            font-size: 2.5rem;
+        
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
         }
-
-        nav {
-            background: #8d99ae;
-            display: flex;
-            justify-content: center;
-            padding: 0.7rem 0;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 1rem;
-            font-weight: bold;
-        }
-
-        nav a:hover {
-            text-decoration: underline;
-        }
-
-        section {
-            padding: 2rem;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        #about, #projects, #contact {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-            padding: 2rem;
-        }
-
-        h2 {
-            color: #2b2d42;
-            margin-bottom: 1rem;
-        }
-
-        .project {
-            margin-bottom: 1.5rem;
-        }
-
-        footer {
-            background: #2b2d42;
-            color: white;
-            text-align: center;
-            padding: 1rem 0;
-        }
-
-        .contact-links a {
-            color: #2b2d42;
-            text-decoration: none;
-            margin-right: 1rem;
-        }
-
-        .contact-links a:hover {
-            text-decoration: underline;
+        
+        .timeline-dot {
+            position: absolute;
+            left: -0.5625rem; /* -left-2.25 */
+            top: 0.25rem; /* top-1 */
+            width: 1.125rem; /* w-4.5 */
+            height: 1.125rem; /* h-4.5 */
+            background-color: #60a5fa; /* bg-blue-400 */
+            border: 3px solid #1e293b; /* border-slate-800 */
+            border-radius: 9999px; /* rounded-full */
+            z-index: 10;
         }
     </style>
 </head>
-<body>
+<body class="antialiased">
 
-    <header>
-        <h1>Welcome to Adil's Portfolio</h1>
-        <p>VLSI Technology | Machine Learning  | Computer Architecture | Artificial Intelligence</p>
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md shadow-md">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Name -->
+                <a href="#home" class="nav-link text-2xl font-bold gradient-text" data-page="home">
+                    Your Name
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li><a href="#home" class="nav-link text-slate-300 hover:text-blue-400 transition-colors duration-300" data-page="home">Home</a></li>
+                    <li><a href="#about" class="nav-link text-slate-300 hover:text-blue-400 transition-colors duration-300" data-page="about">About</a></li>
+                    <li><a href="#projects" class="nav-link text-slate-300 hover:text-blue-400 transition-colors duration-300" data-page="projects">Projects</a></li>
+                    <li><a href="#contact" class="nav-link text-slate-300 hover:text-blue-400 transition-colors duration-300" data-page="contact">Contact</a></li>
+                </ul>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <ul class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <li><a href="#home" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800" data-page="home">Home</a></li>
+                <li><a href="#about" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800" data-page="about">About</a></li>
+                <li><a href="#projects" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800" data-page="projects">Projects</a></li>
+                <li><a href="#contact" class="nav-link block px-3 py-2 rounded-md text-base font-medium text-slate-300 hover:text-white hover:bg-slate-800" data-page="contact">Contact</a></li>
+            </ul>
+        </div>
     </header>
 
-    <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-    </nav>
+    <!-- Main Content Area -->
+    <main class="pt-16">
+        
+        <!-- ======================= -->
+        <!--      HOME SECTION       -->
+        <!-- ======================= -->
+        <section id="home" class="page-section min-h-screen flex items-center justify-center pt-16 lg:pt-0">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
+                    
+                    <!-- Left: Text Content -->
+                    <div class="w-full md:w-3/5 text-center md:text-left">
+                        <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-tight">
+                            Hi, I'm <span class="gradient-text">Your Name</span>
+                        </h1>
+                        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-semibold text-slate-300 mt-4">
+                            Senior Web Developer
+                        </h2>
+                        <p class="text-lg text-slate-400 mt-6 max-w-xl mx-auto md:mx-0">
+                            I build beautiful, responsive, and high-performance web applications. From concept to deployment, I bring your ideas to life with clean code and modern design.
+                        </p>
+                        <div class="mt-10 flex flex-col sm:flex-row justify-center md:justify-start gap-4">
+                            <a href="#projects" class="nav-link bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105" data-page="projects">
+                                View My Work
+                            </a>
+                            <a href="#contact" class="nav-link bg-slate-700 hover:bg-slate-600 text-slate-100 font-bold py-3 px-8 rounded-lg text-lg transition-all duration-300 transform hover:scale-105" data-page="contact">
+                                Get In Touch
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Right: Photo -->
+                    <div class="w-full md:w-2/5 flex justify-center">
+                        <div class="w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-2xl border-4 border-slate-700 relative group">
+                            <img 
+                                src="https://placehold.co/400x400/1e293b/94a3b8?text=Your+Photo" 
+                                alt="A professional photo of Your Name"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                onerror="this.src='https://placehold.co/400x400/1e293b/94a3b8?text=Image+Not+Found'"
+                            >
+                            <div class="absolute inset-0 bg-blue-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! I'm <strong>Md. Asad-Al-Adil</strong>, A Motivated Computer Engineering student and want to be specialized in VLSI design
-and hardware acceleration. Seeking a research-based Master’s to explore low-power
-circuit optimization and FPGA-based architectures. Passionate about contributing to
-rapidly growing cutting-edge semiconductor technologies.</p>
-    </section>
+        <!-- ======================= -->
+        <!--      ABOUT SECTION      -->
+        <!-- ======================= -->
+        <section id="about" class="page-section py-24">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">About Me</h2>
+                    <p class="text-lg text-slate-400 max-w-3xl mx-auto">
+                        Here's a brief overview of my studies and professional experience.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mt-16">
+                    
+                    <!-- Column 1: My Experience -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-8">My Experience</h3>
+                        <div class="space-y-4">
+                            <!-- Timeline Item 1 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <time class="mb-1 text-sm font-normal leading-none text-slate-500">2021 - Present</time>
+                                <h4 class="text-xl font-semibold text-white">Senior Web Developer</h4>
+                                <h5 class="text-md font-medium text-blue-400 mb-2">Tech Solutions Inc.</h5>
+                                <p class="text-base font-normal text-slate-400">Led the development of a major e-commerce platform, improving performance by 30%. Mentored junior developers and managed code reviews.</p>
+                            </div>
+                            
+                            <!-- Timeline Item 2 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <time class="mb-1 text-sm font-normal leading-none text-slate-500">2018 - 2021</time>
+                                <h4 class="text-xl font-semibold text-white">Mid-Level Developer</h4>
+                                <h5 class="text-md font-medium text-blue-400 mb-2">WebCrafters Agency</h5>
+                                <p class="text-base font-normal text-slate-400">Developed and maintained client websites using React, Node.js, and WordPress. Collaborated with designers to create pixel-perfect interfaces.</p>
+                            </div>
+                            
+                            <!-- Timeline Item 3 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <time class="mb-1 text-sm font-normal leading-none text-slate-500">2017 - 2018</time>
+                                <h4 class="text-xl font-semibold text-white">Junior Developer</h4>
+                                <h5 class="text-md font-medium text-blue-400 mb-2">Startup Innovations</h5>
+                                <p class="text-base font-normal text-slate-400">Assisted in building the company's first mobile app and website. Gained foundational experience in agile methodologies and full-stack development.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Column 2: My Studies -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-8">My Studies</h3>
+                        <div class="space-y-4">
+                            <!-- Timeline Item 1 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <time class="mb-1 text-sm font-normal leading-none text-slate-500">2013 - 2017</time>
+                                <h4 class="text-xl font-semibold text-white">B.Sc. in Computer Science</h4>
+                                <h5 class="text-md font-medium text-blue-400 mb-2">University of Technology</h5>
+                                <p class="text-base font-normal text-slate-400">Graduated with honors. Focused on data structures, algorithms, and web development. Completed a final year project on machine learning.</p>
+                            </div>
+                            
+                            <!-- Timeline Item 2 -->
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <time class="mb-1 text-sm font-normal leading-none text-slate-500">2020</time>
+                                <h4 class="text-xl font-semibold text-white">Advanced React Certification</h4>
+                                <h5 class="text-md font-medium text-blue-400 mb-2">Online Coding Academy</h5>
+                                <p class="text-base font-normal text-slate-400">Completed an intensive course on advanced React patterns, state management with Redux & Context API, and performance optimization.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================= -->
+        <!--    PROJECTS SECTION     -->
+        <!-- ======================= -->
+        <section id="projects" class="page-section py-24 bg-slate-800/50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">My Projects</h2>
+                    <p class="text-lg text-slate-400 max-w-3xl mx-auto">
+                        Here are a few examples of my work. I'm passionate about building things that solve real-world problems.
+                    </p>
+                </div>
+                
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+                    
+                    <!-- Project Card 1 -->
+                    <div class="bg-slate-800 rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-blue-500/20">
+                        <img 
+                            src="https://placehold.co/600x400/1e293b/60a5fa?text=Project+Alpha" 
+                            alt="Screenshot of Project Alpha" 
+                            class="w-full h-48 object-cover"
+                            onerror="this.src='https://placehold.co/600x400/1e293b/60a5fa?text=Image+Not+Found'"
+                        >
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Project Alpha</h3>
+                            <p class="text-slate-400 mb-4">
+                                A full-stack e-commerce platform built with React, Node.js, and PostgreSQL. Features Stripe integration and a custom admin dashboard.
+                            </p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-blue-900/50 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full">React</span>
+                                <span class="bg-green-900/50 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Node.js</span>
+                                <span class="bg-purple-900/50 text-purple-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Stripe</span>
+                            </div>
+                            <div class="mt-6 flex gap-4">
+                                <a href="#" class="text-blue-400 hover:text-blue-300 font-medium transition-colors duration-300">Live Demo</a>
+                                <a href="#" class="text-slate-400 hover:text-slate-200 font-medium transition-colors duration-300">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project Card 2 -->
+                    <div class="bg-slate-800 rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-emerald-500/20">
+                        <img 
+                            src="https://placehold.co/600x400/1e293b/34d399?text=Project+Beta" 
+                            alt="Screenshot of Project Beta" 
+                            class="w-full h-48 object-cover"
+                            onerror="this.src='https://placehold.co/600x400/1e293b/34d399?text=Image+Not+Found'"
+                        >
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Project Beta</h3>
+                            <p class="text-slate-400 mb-4">
+                                A real-time chat application using Firebase and Vue.js. Supports group chats, image uploads, and typing indicators.
+                            </p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-green-900/50 text-green-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Vue.js</span>
+                                <span class="bg-yellow-900/50 text-yellow-300 text-xs font-medium px-2.5 py-0.5 rounded-full">Firebase</span>
+                            </div>
+                            <div class="mt-6 flex gap-4">
+                                <a href="#" class="text-emerald-400 hover:text-emerald-300 font-medium transition-colors duration-300">Live Demo</a>
+                                <a href="#" class="text-slate-400 hover:text-slate-200 font-medium transition-colors duration-300">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project Card 3 -->
+                    <div class="bg-slate-800 rounded-lg shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-pink-500/20">
+                        <img 
+                            src="https://placehold.co/600x400/1e293b/ec4899?text=Project+Gamma" 
+                            alt="Screenshot of Project Gamma" 
+                            class="w-full h-48 object-cover"
+                            onerror="this.src='https://placehold.co/600x400/1e293b/ec4899?text=Image+Not+Found'"
+                        >
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Project Gamma</h3>
+                            <p class="text-slate-400 mb-4">
+                                A data visualization dashboard built with D3.js and React, tracking global financial trends from a public API.
+                            </p>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-blue-900/50 text-blue-300 text-xs font-medium px-2.5 py-0.5 rounded-full">React</span>
+                                <span class="bg-orange-900/50 text-orange-300 text-xs font-medium px-2.5 py-0.5 rounded-full">D3.js</span>
+                                <span class="bg-red-900/50 text-red-300 text-xs font-medium px-2.5 py-0.5 rounded-full">API</span>
+                            </div>
+                            <div class="mt-6 flex gap-4">
+                                <a href="#" class="text-pink-400 hover:text-pink-300 font-medium transition-colors duration-300">Live Demo</a>
+                                <a href="#" class="text-slate-400 hover:text-slate-200 font-medium transition-colors duration-3AN-u1-g3.ts0">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
 
-    <section id="projects">
-        <h2>Projects</h2>
-
-        <div class="project">
-            <h3>Project 1: MyExpense Tracker mobile application</h3>
-            <p>A responsive application built using Android Studio and Java Programming Language.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ======================= -->
+        <!--    CONTACT SECTION      -->
+        <!-- ======================= -->
+        <section id="contact" class="page-section py-24">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4">Get In Touch</h2>
+                    <p class="text-lg text-slate-400 max-w-3xl mx-auto">
+                        I'm currently available for freelance work and open to discussing new projects. Feel free to send me a message.
+                    </p>
+                </div>
+                
+                <div class="max-w-lg mx-auto mt-16">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-slate-300">Your Name</label>
+                            <input type="text" id="name" name="name" required
+                                class="mt-1 block w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-slate-300">Your Email</label>
+                            <input type="email" id="email" name="email" required
+                                class="mt-1 block w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-sm font-medium text-slate-300">Message</label>
+                            <textarea id="message" name="message" rows="4" required
+                                class="mt-1 block w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-slate-900 transition-all duration-300 transform hover:scale-105">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                    <!-- Form submission message -->
+                    <div id="form-message" class="hidden mt-4 text-center p-3 rounded-lg"></div>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center">
+            <p class="text-slate-500">&copy; <span id="current-year"></span> Your Name. All rights reserved.</p>
+            <!-- Add social links here if you want -->
         </div>
-
-        <div class="project">
-            <h3>Project 2: MyExpense Tracker web application</h3>
-            <p>This website — showcasing my skills, projects, and contact details in a simple, elegant way.</p>
-        </div>
-
-        <div class="project">
-            <h3>Project 3: </h3>
-            <p>A script that automates repetitive daily tasks like file organization and data backup.</p>
-        </div>
-    </section>
-
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <p>If you’d like to collaborate or just say hi, reach out through the links below!</p>
-        <div class="contact-links">
-            <a href="mailto:yourname@example.com">Email</a>
-            <a href="https://github.com/yourusername" target="_blank">GitHub</a>
-            <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
-        </div>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Adil | All Rights Reserved</p>
     </footer>
 
+    <!-- JavaScript for Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pageSections = document.querySelectorAll('.page-section');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const contactForm = document.getElementById('contact-form');
+            const formMessage = document.getElementById('form-message');
+
+            // Function to show a page
+            function showPage(pageId) {
+                // Hide all sections
+                pageSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show the target section
+                const targetSection = document.getElementById(pageId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                
+                // Update active nav link
+                navLinks.forEach(link => {
+                    link.classList.remove('nav-link-active');
+                    if (link.dataset.page === pageId) {
+                        link.classList.add('nav-link-active');
+                    }
+                });
+
+                // Close mobile menu
+                mobileMenu.classList.add('hidden');
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }
+
+            // Add click event listeners to all nav links
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = link.dataset.page;
+                    if (pageId) {
+                        showPage(pageId);
+                        // Update URL hash
+                        history.pushState(null, '', `#${pageId}`);
+                    }
+                });
+            });
+
+            // Mobile menu toggle
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Handle browser back/forward navigation
+            window.addEventListener('popstate', () => {
+                const hash = window.location.hash.substring(1);
+                showPage(hash || 'home');
+            });
+            
+            // Show initial page based on URL hash
+            const initialPage = window.location.hash.substring(1) || 'home';
+            showPage(initialPage);
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // Handle contact form submission
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // This is a demo. In a real app, you'd send this to a server.
+                formMessage.textContent = 'Thank you for your message! (This is a demo)';
+                formMessage.classList.remove('hidden', 'bg-red-200', 'text-red-800');
+                formMessage.classList.add('bg-green-200', 'text-green-800');
+                formMessage.classList.remove('hidden');
+                
+                contactForm.reset();
+
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 5000);
+            });
+        });
+    </script>
 </body>
 </html>
