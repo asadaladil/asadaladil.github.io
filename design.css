@@ -1,0 +1,86 @@
+/* --- Basic Reset & Body --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* --- Calculator --- */
+        .calculator {
+            width: 320px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            background-color: #2d3436;
+            overflow: hidden;
+        }
+
+        /* --- Display Screen --- */
+        .calculator-display {
+            background-color: #2d3436;
+            color: #ffffff;
+            padding: 25px 20px;
+            text-align: right;
+            border-bottom: 1px solid #444;
+        }
+
+        .calculator-display .previous-operand {
+            font-size: 1.25rem; /* 20px */
+            color: #b2bec3;
+            min-height: 24px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+        
+        .calculator-display .current-operand {
+            font-size: 2.5rem; /* 40px */
+            font-weight: 300;
+            min-height: 48px;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+
+        /* --- Button Grid --- */
+        .calculator-keys {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 1px; 
+            background-color: #4a5052; 
+        }
+
+        /* --- Individual Buttons --- */
+        .calculator-keys button {
+            background-color: #636e72;
+            color: #ffffff;
+            font-size: 1.5rem; /* 24px */
+            border: none;
+            padding: 20px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .calculator-keys button:hover {
+            background-color: #818d92;
+        }
+
+        .span-two {
+            grid-column: span 2;
+        }
+
+        .operator {
+            background-color: #ff9f43;
+        }
+        .operator:hover {
+            background-color: #ffae60;
+        }
+
+        .function {
+            background-color: #4a5052;
+        }
+        .function:hover {
+            background-color: #636e72;
+        }
