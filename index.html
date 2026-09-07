@@ -1,585 +1,678 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adil's Portfolio</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
-     <link rel="icon" type="image/x-icon" href="portfolio.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #cbd5e1;
-        }
-        
-        .gradient-text {
-            background-image: linear-gradient(to right, #60a5fa, #34d399);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        
-        /* Active Nav Link Style via ScrollSpy */
-        .nav-link.active {
-            color: #60a5fa;
-            position: relative;
-        }
-        
-        .nav-link.active::after {
-            content: '';
-            display: block;
-            width: 100%;
-            height: 2px;
-            background-color: #60a5fa;
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-        }
-
-        /* Timeline styles */
-        .timeline-item {
-            position: relative;
-            padding-left: 2.5rem;
-            padding-bottom: 2rem;
-            border-left: 2px solid #334155;
-        }
-        
-        .timeline-item:last-child {
-            border-left: 2px solid transparent;
-            padding-bottom: 0;
-        }
-        
-        .timeline-dot {
-            position: absolute;
-            left: -0.5625rem;
-            top: 0.25rem;
-            width: 1.125rem;
-            height: 1.125rem;
-            background-color: #60a5fa;
-            border: 3px solid #1e293b;
-            border-radius: 9999px;
-            z-index: 10;
-        }
-
-        /* Glassmorphism effects */
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Animation for entrance */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .skill-badge {
-            background: rgba(51, 65, 85, 0.5);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .skill-badge:hover {
-            border-color: #60a5fa;
-            background: rgba(96, 165, 250, 0.1);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Research portfolio of Md. Asad-Al-Adil — VLSI, systolic architectures, FPGA/ASIC acceleration, embedded AI, and multiplierless CNN acceleration.">
+  <meta name="theme-color" content="#0f172a">
+  <title>Md. Asad-Al-Adil | VLSI & AI Hardware Research</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="portfolio.png">
+  <style>
+    :root { --blue:#60a5fa; --emerald:#34d399; --violet:#a78bfa; }
+    * { box-sizing: border-box; }
+    body { font-family:'Inter',sans-serif; background:#0b1120; color:#cbd5e1; }
+    .mono { font-family:'JetBrains Mono',monospace; }
+    .gradient-text { background:linear-gradient(90deg,#60a5fa,#34d399 55%,#a78bfa); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    .glass-card { background:rgba(30,41,59,.62); backdrop-filter:blur(14px); border:1px solid rgba(148,163,184,.13); box-shadow:0 18px 55px rgba(2,6,23,.24); }
+    .soft-card { background:linear-gradient(145deg,rgba(30,41,59,.72),rgba(15,23,42,.78)); border:1px solid rgba(148,163,184,.12); }
+    .skill-badge { background:rgba(51,65,85,.48); border:1px solid rgba(148,163,184,.12); transition:.25s ease; }
+    .skill-badge:hover { border-color:rgba(96,165,250,.65); background:rgba(96,165,250,.10); transform:translateY(-2px); }
+    .nav-link.active { color:#93c5fd; }
+    .nav-link.active::after { content:""; display:block; height:2px; margin-top:5px; border-radius:999px; background:linear-gradient(90deg,#60a5fa,#34d399); }
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.active { opacity:1; transform:translateY(0); }
+    .timeline-item { position:relative; padding-left:2.1rem; padding-bottom:1.8rem; border-left:1px solid #334155; }
+    .timeline-item:last-child { border-left-color:transparent; padding-bottom:0; }
+    .timeline-dot { position:absolute; left:-.43rem; top:.32rem; width:.82rem; height:.82rem; border-radius:999px; background:#60a5fa; box-shadow:0 0 0 4px #172033; }
+    .research-grid { background-image:linear-gradient(rgba(96,165,250,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.045) 1px,transparent 1px); background-size:34px 34px; }
+    .hero-glow::before { content:""; position:absolute; inset:-14%; background:radial-gradient(circle at 25% 35%,rgba(59,130,246,.15),transparent 35%),radial-gradient(circle at 80% 45%,rgba(16,185,129,.12),transparent 34%),radial-gradient(circle at 60% 95%,rgba(139,92,246,.10),transparent 30%); pointer-events:none; }
+    .status-pill { border:1px solid rgba(52,211,153,.25); background:rgba(16,185,129,.08); color:#6ee7b7; }
+    .section-kicker { letter-spacing:.16em; text-transform:uppercase; font-weight:700; font-size:.72rem; color:#60a5fa; }
+    .paper-card { position:relative; overflow:hidden; }
+    .paper-card::before { content:""; position:absolute; inset:0 auto 0 0; width:3px; background:linear-gradient(#60a5fa,#34d399); }
+    .abstract-toggle summary { list-style:none; cursor:pointer; user-select:none; }
+    .abstract-toggle summary::-webkit-details-marker { display:none; }
+    .abstract-chevron { transition:transform .25s ease; }
+    .abstract-toggle[open] .abstract-chevron { transform:rotate(180deg); }
+    .abstract-body { animation:abstractFade .24s ease; }
+    @keyframes abstractFade { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+    .stat { background:rgba(15,23,42,.72); border:1px solid rgba(148,163,184,.12); }
+    .achievement-card { position:relative; overflow:hidden; isolation:isolate; }
+    .achievement-card::after { content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit; box-shadow:inset 0 0 0 1px rgba(255,255,255,.03); }
+    .achievement-photo { aspect-ratio:4/3; overflow:hidden; background:#111827; }
+    .achievement-photo img { width:100%; height:100%; object-fit:cover; transition:transform .55s ease, filter .55s ease; }
+    .achievement-card:hover .achievement-photo img { transform:scale(1.055); filter:saturate(1.08); }
+    .achievement-shine { position:absolute; inset:0; background:linear-gradient(180deg,transparent 45%,rgba(2,6,23,.82)); pointer-events:none; }
+    .achievement-year { position:absolute; top:1rem; right:1rem; z-index:2; backdrop-filter:blur(8px); background:rgba(15,23,42,.78); border:1px solid rgba(148,163,184,.18); }
+    #achievement-modal { transition:opacity .2s ease; }
+    #achievement-modal.hidden-modal { opacity:0; pointer-events:none; }
+    #achievement-modal:not(.hidden-modal) { opacity:1; pointer-events:auto; }
+    #scroll-progress { position:fixed; top:0; left:0; height:3px; width:0; z-index:70; background:linear-gradient(90deg,#60a5fa,#34d399,#a78bfa); }
+    @media (prefers-reduced-motion:reduce) { .reveal { opacity:1; transform:none; transition:none; } html { scroll-behavior:auto; } }
+  </style>
 </head>
 <body class="antialiased overflow-x-hidden">
+  <div id="scroll-progress"></div>
 
-    <!-- Header & Navigation -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
-        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
-                <a href="#home" class="text-xl font-bold gradient-text tracking-tighter uppercase">
-                    Adil's Portfolio
-                </a>
-                
-                <!-- Desktop Navigation -->
-                <ul class="hidden md:flex items-center space-x-8">
-                    <li><a href="#home" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors duration-300">Home</a></li>
-                    <li><a href="#about" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors duration-300">About</a></li>
-                    <li><a href="#skills" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors duration-300">Skills</a></li>
-                    <li><a href="#projects" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors duration-300">Projects</a></li>
-                    <li><a href="#contact" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-400 transition-colors duration-300">Contact</a></li>
-                </ul>
-                
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-slate-300">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
+  <header class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/80">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <a href="#home" class="font-extrabold gradient-text tracking-tight uppercase">Md. Asad-Al-Adil</a>
+        <ul class="hidden lg:flex items-center gap-7">
+          <li><a href="#home" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Home</a></li>
+          <li><a href="#research" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Research</a></li>
+          <li><a href="#publications" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Papers</a></li>
+          <li><a href="#experience" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Experience</a></li>
+          <li><a href="#achievements" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Achievements</a></li>
+          <li><a href="#training" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Training</a></li>
+          <li><a href="#skills" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Skills</a></li>
+          <li><a href="#projects" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Projects</a></li>
+          <li><a href="#contact" class="nav-link text-sm font-medium text-slate-400 hover:text-blue-300">Contact</a></li>
+        </ul>
+        <button id="mobile-menu-btn" aria-label="Open navigation" class="lg:hidden text-slate-300 p-2 rounded-lg hover:bg-slate-800">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+        </button>
+      </div>
+    </nav>
+    <div id="mobile-menu" class="hidden lg:hidden bg-slate-950 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 py-4 grid grid-cols-2 gap-3 text-sm">
+        <a class="mobile-nav-link p-2 text-slate-300" href="#home">Home</a>
+        <a class="mobile-nav-link p-2 text-slate-300" href="#research">Research</a>
+        <a class="mobile-nav-link p-2 text-slate-300" href="#publications">Papers</a>
+        <a class="mobile-nav-link p-2 text-slate-300" href="#experience">Experience</a>
+        <a class="mobile-nav-link p-2 text-slate-300" href="#achievements">Achievements</a>
+        <a class="mobile-nav-link p-2 text-slate-300" href="#training">Training</a>
+        <a class="mobile-nav-link p-2 text-slate-300" href="#skills">Skills</a>
+        <a class="mobile-nav-link p-2 text-slate-300" href="#projects">Projects</a>
+        <a class="mobile-nav-link p-2 text-slate-300" href="#contact">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="relative min-h-screen flex items-center pt-24 hero-glow research-grid overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10 w-full">
+        <div class="grid lg:grid-cols-[1.2fr_.8fr] gap-12 items-center">
+          <div class="reveal">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full status-pill text-xs font-semibold mb-6">
+              <span class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+              Prospective Master's Researcher · VLSI · AI Hardware Acceleration · Parallel Computing
             </div>
-        </nav>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800">
-            <ul class="px-4 py-4 space-y-4">
-                <li><a href="#home" class="mobile-nav-link block text-slate-300">Home</a></li>
-                <li><a href="#about" class="mobile-nav-link block text-slate-300">About</a></li>
-                <li><a href="#skills" class="mobile-nav-link block text-slate-300">Skills</a></li>
-                <li><a href="#projects" class="mobile-nav-link block text-slate-300">Projects</a></li>
-                <li><a href="#contact" class="mobile-nav-link block text-slate-300">Contact</a></li>
-            </ul>
+            <p class="section-kicker mb-4">Computer Engineering · RUET</p>
+            <h1 class="text-4xl sm:text-6xl xl:text-7xl font-extrabold text-white leading-[1.04] tracking-tight">
+              MD. <span class="gradient-text">ASAD-AL-ADIL</span>
+            </h1>
+            <h2 class="mt-6 text-xl sm:text-2xl text-slate-300 font-semibold max-w-3xl">
+              Designing efficient hardware for intelligent systems — from multiplierless CNN acceleration to embedded AI.
+            </h2>
+            <p class="mt-6 text-base sm:text-lg text-slate-400 leading-8 max-w-3xl">
+              Final-year Computer Science and Engineering student at Rajshahi University of Engineering & Technology (RUET), with a <strong class="text-slate-200">CGPA of 3.93/4.00</strong>. My research interests center on VLSI, heterogeneous systolic architectures, FPGA/ASIC acceleration, quantized neural networks, and energy-efficient computing. I am currently developing <strong class="text-slate-200">HeSA-TAPoT</strong>, a multiplierless CNN accelerator architecture based on two-term additive power-of-two quantization.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+              <a href="#research" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition shadow-lg shadow-blue-500/15">Explore Research</a>
+              <a href="mailto:adilasadals@gmail.com?subject=Research%20Opportunity%20-%20Md.%20Asad-Al-Adil" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold border border-slate-700 transition">Contact Me</a>
+              <a href="cv.pdf" class="px-6 py-3 rounded-xl bg-slate-900/70 hover:bg-slate-800 text-slate-200 font-bold border border-slate-700 transition" title="Place your latest CV PDF in the repository as cv.pdf">Download CV</a>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-10 max-w-3xl">
+              <div class="stat rounded-2xl p-4"><div class="text-2xl font-extrabold text-white">3.93<span class="text-sm text-slate-500">/4.00</span></div><div class="text-xs text-slate-500 mt-1">B.Sc. CGPA</div></div>
+              <div class="stat rounded-2xl p-4"><div class="text-2xl font-extrabold text-white">2</div><div class="text-xs text-slate-500 mt-1">Papers under review</div></div>
+              <div class="stat rounded-2xl p-4"><div class="text-2xl font-extrabold text-white">13K+</div><div class="text-xs text-slate-500 mt-1">STEM scripts evaluated</div></div>
+              <div class="stat rounded-2xl p-4"><div class="text-2xl font-extrabold text-white">6 yrs</div><div class="text-xs text-slate-500 mt-1">Strength training</div></div>
+            </div>
+          </div>
+
+          <div class="reveal flex justify-center lg:justify-end">
+            <div class="relative w-full max-w-md">
+              <div class="absolute -inset-3 bg-gradient-to-br from-blue-500/30 via-emerald-500/15 to-violet-500/25 rounded-[2rem] blur-2xl"></div>
+              <div class="relative glass-card rounded-[2rem] p-5">
+                <div class="aspect-square rounded-[1.5rem] overflow-hidden border border-slate-700 bg-slate-900">
+                  <img src="Adil.jpg" alt="Md. Asad-Al-Adil" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/700x700/0f172a/93c5fd?text=Md.+Asad-Al-Adil'">
+                </div>
+                <div class="p-4 pb-2">
+                  <div class="flex items-center justify-between gap-4">
+                    <div>
+                      <p class="text-white font-bold">Research Focus</p>
+                      <p class="text-sm text-slate-500">FPGA/ASIC Acceleration · Energy-Efficient  Parallel Computing · AI/ML Accelerators · Hardware–Software Co-design · VLSI</p>
+                    </div>
+                    <span class="mono text-[11px] px-2.5 py-1 rounded-lg bg-slate-900 text-blue-300 border border-slate-700">RTL</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </header>
+      </div>
+    </section>
 
-    <main>
-        <!-- HOME SECTION -->
-        <section id="home" class="min-h-screen flex items-center justify-center pt-20">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-12">
-                    <div class="w-full md:w-3/5 text-center md:text-left reveal">
-                        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
-                            Hi, I'm <br><span class="gradient-text">MD. ASAD-AL-ADIL</span>
-                        </h1>
-                        <div class="mt-6 space-y-2 text-xl sm:text-2xl font-semibold text-slate-400">
-                            <p class="flex items-center justify-center md:justify-start gap-2">
-                                <span class="w-2 h-2 bg-blue-500 rounded-full"></span> VLSI Design Technology
-                            </p>
-                            <p class="flex items-center justify-center md:justify-start gap-2">
-                                <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>Computer Hardware Architecture & Acceleration
-                            </p>
-                            <p class="flex items-center justify-center md:justify-start gap-2">
-                                <span class="w-2 h-2 bg-purple-500 rounded-full"></span> AI / ML Research
-                            </p>
-                        </div>
-                        <p class="text-lg text-slate-400 mt-8 max-w-xl mx-auto md:mx-0">
-                            A motivated Computer Engineering student and want to be specialized in VLSI design and Computer Hardware
-Acceleration. I want to explore low-power circuit optimization, FPGA-based architecture, and advancement
-technology using AI. Passionate about contributing to rapidly growing, cutting-edge semiconductor
-technologies and VLSI system design.
-                        </p>
-                        <div class="mt-10 flex flex-col sm:flex-row justify-center md:justify-start gap-4">
-                            <a href="#projects" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg text-lg transition-all shadow-lg shadow-blue-500/20">
-                                View Projects
-                            </a>
-                            <a href="#contact" class="bg-slate-800 hover:bg-slate-700 text-slate-100 font-bold py-3 px-8 rounded-lg text-lg transition-all">
-                                Get In Touch
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="w-full md:w-2/5 flex justify-center reveal">
-                        <div class="relative group">
-                            <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-emerald-500 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
-                            <div class="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl">
-                                <img 
-                                    src="Adil.jpg" 
-                                    alt="Md. Asad-Al-Adil"
-                                    class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                                    onerror="this.src='https://placehold.co/400x400/1e293b/60a5fa?text=Adil'"
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ABOUT SECTION -->
-        <section id="about" class="py-32 bg-slate-900/50">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-20 reveal">
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-6">Experience & Education</h2>
-                    <div class="w-24 h-1 bg-blue-500 mx-auto rounded-full"></div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mt-16">
-                    <!-- Education -->
-                    <div class="reveal">
-                        <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                            <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 14l9-5-9-5-9 5 9 5z"></path><path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"></path></svg>
-                            Academic Path
-                        </h3>
-                        <div class="space-y-4">
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <time class="text-sm font-semibold text-blue-400 uppercase">2022 - 2027</time>
-                                <h4 class="text-xl font-bold text-white">B.Sc in Engineering (CSE)</h4>
-                                <h5 class="text-slate-400">RUET, Rajshahi, Bangladesh | CGPA: 3.95/4.00</h5>
-                                <p class="mt-2 text-slate-500">Focusing on VLSI design technology, RTL coding, Verification and Advanced Computer Architecture.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <time class="text-sm font-semibold text-blue-400 uppercase">2021</time>
-                                <h4 class="text-xl font-bold text-white">HSC Board Examination</h4>
-                                <h5 class="text-slate-400">GPA: 5.00/5.00</h5>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <time class="text-sm font-semibold text-blue-400 uppercase">2019</time>
-                                <h4 class="text-xl font-bold text-white">SSC Board Examination</h4>
-                                <h5 class="text-slate-400">GPA: 5.00/5.00</h5>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Experience -->
-                    <div class="reveal">
-                        <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                            <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.823.362l-1.17 1.17a1 1 0 00-.293.707V20a2 2 0 002 2h14a2 2 0 002-2v-2.707a1 1 0 00-.293-.707l-1.17-1.17z"></path></svg>
-                            Work History
-                        </h3>
-                        <div class="space-y-4">
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <time class="text-sm font-semibold text-emerald-400 uppercase">Feb 2026 - Mar 2026</time>
-                                <h4 class="text-xl font-bold text-white">Industrial Attachment</h4>
-                                <h5 class="text-slate-400">Neural Semiconductor Limited, Dhaka</h5>
-                                <p class="mt-2 text-slate-500">Focused on the VLSI design Technology using Cadence tool suite for RTL design, functional verification, physical layout and Fabrication.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <time class="text-sm font-semibold text-emerald-400 uppercase">Sep 2022 - Present</time>
-                                <h4 class="text-xl font-bold text-white">Script Evaluator</h4>
-                                <h5 class="text-slate-400">Private Educational Institution</h5>
-                                <p class="mt-2 text-slate-500">Evaluated 11,000+ academic scripts in STEM subjects with 100% accuracy.</p>
-                            </div>
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <time class="text-sm font-semibold text-emerald-400 uppercase">Apr 2024 - Present</time>
-                                <h4 class="text-xl font-bold text-white">Private Tuition</h4>
-                                <p class="mt-2 text-slate-500">Class- 8 to 10: Physics, Chemistry, Math.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SKILLS SECTION -->
-        <section id="skills" class="py-32">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-20 reveal">
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-6">Technical Arsenal</h2>
-                    <div class="w-24 h-1 bg-emerald-500 mx-auto rounded-full"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal">
-                    <!-- Languages -->
-                    <div class="glass-card p-8 rounded-3xl">
-                        <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                            <span class="w-2 h-6 bg-blue-500 rounded-full"></span> Languages
-                        </h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">C/C++</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Python</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Java</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Verilog HDL</span>
-                        </div>
-                    </div>
-
-                    <!-- Hardware / Tools -->
-                    <div class="glass-card p-8 rounded-3xl">
-                        <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                            <span class="w-2 h-6 bg-emerald-500 rounded-full"></span> Hardware & Tools
-                        </h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Arduino</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">emu8086</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">STM32F103</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Cadence</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Proteus</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Ki-CAD</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Vivado</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Keil-microvision</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Logisim-Evolution</span>
-                        </div>
-                    </div>
-
-                    <!-- Software / ML -->
-                    <div class="glass-card p-8 rounded-3xl">
-                        <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                            <span class="w-2 h-6 bg-purple-500 rounded-full"></span> Software & ML
-                        </h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">CodeBlocks</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">VS Code</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">NumPy</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Matplotlib</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Seaborn</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Plotly</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">PyTorch</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Scikit-learn</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Django</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Pandas</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Gradio</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">Hugging Face</span>
-                            <span class="skill-badge px-4 py-2 rounded-xl text-slate-300">MS Word/Excel/PowerPoint</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- PROJECTS SECTION -->
-        <section id="projects" class="py-32 bg-slate-900/50">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-20 reveal">
-                    <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-6">Technical Portfolio</h2>
-                    <p class="text-lg text-slate-400 max-w-2xl mx-auto">Selected works demonstrating end-to-end engineering solutions.</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 mt-16">
-                    <!-- Project 1: STM32 Digit Detection -->
-                    <div class="glass-card rounded-2xl overflow-hidden reveal group hover:-translate-y-2 transition-all duration-300">
-                        <div class="h-56 bg-slate-800 flex items-center justify-center overflow-hidden">
-                             <img src="https://placehold.co/600x400/1e293b/60a5fa?text=STM32+Digit+Detection" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="STM32 Project">
-                        </div>
-                        <div class="p-8">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-2xl font-bold text-white">Digit Detection System</h3>
-                                <span class="bg-blue-500/10 text-blue-400 text-[10px] px-2 py-1 rounded font-bold uppercase">Hardware/CNN</span>
-                            </div>
-                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                                Developed a full-stack hardware/software system integrating a TensorFlow CNN (98.2% accuracy) with an STM32 MCU. Engineered bare-metal C drivers and custom diode-logic circuits.
-                            </p>
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">STM32</span>
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">TensorFlow</span>
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">UART</span>
-                            </div>
-                            <a href="https://github.com/asadaladil/CSE_3200_Project-STM32" class="inline-flex items-center text-blue-400 hover:text-blue-300 font-bold text-sm transition-all group">
-                                View Repository
-                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Project 2: Medical Charges Predictor -->
-                    <div class="glass-card rounded-2xl overflow-hidden reveal group hover:-translate-y-2 transition-all duration-300">
-                        <div class="h-56 bg-slate-800 flex items-center justify-center overflow-hidden">
-                            <img src="https://placehold.co/600x400/1e293b/34d399?text=ML+Medical+Predictor" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Medical Predictor">
-                        </div>
-                        <div class="p-8">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-2xl font-bold text-white">Medical Charges Predictor</h3>
-                                <span class="bg-emerald-500/10 text-emerald-400 text-[10px] px-2 py-1 rounded font-bold uppercase">Machine Learning</span>
-                            </div>
-                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                                ML solution hosted on Hugging Face using Gradient Boosting to estimate healthcare costs. Features rigorous hyperparameter tuning and a Gradio-based analytical interface.
-                            </p>
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">Gradient Boosting</span>
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">Hugging Face</span>
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">Gradio</span>
-                            </div>
-                            <a href="https://huggingface.co/spaces/asadaladil/Medical-Charges-Predictor" class="inline-flex items-center text-emerald-400 hover:text-emerald-300 font-bold text-sm transition-all group">
-                                View Live App
-                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Project 3: MyExpense Django -->
-                    <div class="glass-card rounded-2xl overflow-hidden reveal group hover:-translate-y-2 transition-all duration-300">
-                        <div class="h-56 bg-slate-800 flex items-center justify-center overflow-hidden">
-                            <img src="https://placehold.co/600x400/1e293b/ec4899?text=Django+MyExpense" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="MyExpense">
-                        </div>
-                        <div class="p-8">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-2xl font-bold text-white">MyExpense Web App</h3>
-                                <span class="bg-pink-500/10 text-pink-400 text-[10px] px-2 py-1 rounded font-bold uppercase">Full Stack</span>
-                            </div>
-                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                                Scalable financial tracking platform utilizing Django and SQLite. Features relational database schemas, QuerySet optimization, and real-time analytical reporting.
-                            </p>
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">Django</span>
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">Bootstrap</span>
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">SQLite</span>
-                            </div>
-                            <div>
-                            <a href="https://github.com/asadaladil/CSE-3100-Project" class="inline-flex items-center text-pink-400 hover:text-blue-300 font-bold text-sm transition-all group">
-                                View Repository
-                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </a>
-                        </div>
-                        </div>
-                        
-                    </div>
-
-                    <!-- Project 4: Android Tracker -->
-                    <div class="glass-card rounded-2xl overflow-hidden reveal group hover:-translate-y-2 transition-all duration-300">
-                        <div class="h-56 bg-slate-800 flex items-center justify-center overflow-hidden">
-                            <img src="https://placehold.co/600x400/1e293b/f59e0b?text=Android+Expense+Tracker" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="Android App">
-                        </div>
-                        <div class="p-8">
-                            <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-2xl font-bold text-white">Android Expense Tracker</h3>
-                                <span class="bg-amber-500/10 text-amber-400 text-[10px] px-2 py-1 rounded font-bold uppercase">Mobile Dev</span>
-                            </div>
-                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                                Comprehensive mobile application built using Java and Android Studio. Implements persistent storage and complex UI components for data visualization.
-                            </p>
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">Java</span>
-                                <span class="text-[10px] font-bold py-1 px-2 bg-slate-800 text-slate-400 rounded border border-slate-700">Android SDK</span>
-                            </div>
-                            <div>
-                            <a href="https://github.com/asadaladil/Android/tree/main/ExpenseTracker" class="inline-flex items-center text-orange-400 hover:text-blue-300 font-bold text-sm transition-all group">
-                                View Repository
-                                <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- CONTACT SECTION -->
-        <section id="contact" class="py-32">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-4xl mx-auto glass-card rounded-3xl p-8 md:p-16 reveal">
-                    <div class="text-center mb-12">
-                        <h2 class="text-3xl font-bold text-white mb-4">Get In Touch</h2>
-                        <p class="text-slate-400">Available for Research Collaborations, Internships, and VLSI projects.</p>
-                        <div class="mt-4 flex justify-center gap-6 text-sm text-slate-400"> 
-                            <p class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg> adilasadals@gmail.com</p>
-                            <p class="flex items-center gap-2"><svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg> +8801632039154</p>
-                        </div>
-                    </div>
-                    
-                    <form id="contact-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="space-y-6">
-                            <input id="your_name" type="text" placeholder="Your Name" required class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                            <input id="email" type="email" placeholder="Your Email" required class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all">
-                        </div>
-                        <div>
-                            <textarea id="message" placeholder="Message" rows="5" required class="w-full px-4 py-4 bg-slate-800 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all"></textarea>
-                        </div>
-                        <div class="md:col-span-2">
-                            <button type="submit" class="w-full py-4 bg-gradient-to-r from-blue-600 to-emerald-600 text-white font-bold rounded-xl hover:opacity-90 transition-all transform hover:scale-[1.01]">
-                                Send Message
-                            </button>
-                        </div>
-                    </form>
-                    <div id="form-message" class="hidden mt-6 text-center p-4 rounded-xl"></div>
-                </div>
-            </div>
-        </section>
-    </main>
-    
-    <footer class="py-12 border-t border-slate-800 text-center">
-        <div class="mb-4 flex justify-center gap-4">
-             <a href="https://github.com/asadaladil" class="text-slate-500 hover:text-blue-400">GitHub</a>
-             <a href="https://www.linkedin.com/in/md-asad-al-adil-a42394252/" class="text-slate-500 hover:text-blue-400">LinkedIn</a>
-             <!-- <a href="#" class="text-slate-500 hover:text-blue-400">ResearchGate</a> -->
+    <section id="research" class="py-28 bg-slate-950/55">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+          <p class="section-kicker">Current Research</p>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Thesis & Research Direction</h2>
+          <p class="text-slate-400 mt-5">The central thread of my work is making neural-network computation more hardware-efficient without losing practical accuracy.</p>
         </div>
-        <p class="text-slate-500 text-[10px] tracking-[0.2em] uppercase">
-            &copy; <span id="current-year"></span> MD. ASAD-AL-ADIL | Rajshahi, Bangladesh
-        </p>
-    </footer>
 
-    <script>
-        // Toggle Mobile Menu
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        <div class="glass-card rounded-3xl p-7 sm:p-10 reveal overflow-hidden relative">
+          <div class="absolute top-0 right-0 w-52 h-52 bg-blue-500/10 rounded-full blur-3xl"></div>
+          <div class="relative">
+            <div class="flex flex-wrap items-center gap-3 mb-5">
+              <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 text-xs font-bold uppercase">Undergraduate Thesis · Ongoing</span>
+              <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-xs font-bold uppercase">Multiplierless CNN Acceleration</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight max-w-5xl">
+              HeSA-TAPoT: A Boundary-Aware Heterogeneous Systolic Array Architecture for Multiplierless CNN Acceleration Using Two-Term Additive Power-of-Two Quantization
+            </h3>
+            <div class="grid md:grid-cols-3 gap-5 mt-8">
+              <div class="soft-card rounded-2xl p-5">
+                <p class="text-blue-300 font-bold">Heterogeneous Systolic Design</p>
+                <p class="text-sm text-slate-400 mt-2 leading-6">Exploring a boundary-aware architecture that uses different processing behavior where dataflow and accumulation requirements change across the array.</p>
+              </div>
+              <div class="soft-card rounded-2xl p-5">
+                <p class="text-emerald-300 font-bold">Two-Term Additive PoT</p>
+                <p class="text-sm text-slate-400 mt-2 leading-6">Approximating quantized weights using two signed power-of-two terms so multiplication can be replaced by two shifts and an addition.</p>
+              </div>
+              <div class="soft-card rounded-2xl p-5">
+                <p class="text-violet-300 font-bold">RTL-Oriented Evaluation</p>
+                <p class="text-sm text-slate-400 mt-2 leading-6">Developing and verifying Verilog RTL while studying trade-offs among parallelism, numerical precision, resource cost, and accelerator throughput.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+        <div class="mt-12 grid md:grid-cols-2 gap-6 reveal">
+          <div class="soft-card rounded-3xl p-7">
+            <p class="section-kicker">Research Interests</p>
+            <div class="grid sm:grid-cols-2 gap-3 mt-5">
+              <span class="skill-badge rounded-xl px-4 py-3">VLSI / Digital IC Design</span>
+              <span class="skill-badge rounded-xl px-4 py-3">FPGA / ASIC Acceleration</span>
+              <span class="skill-badge rounded-xl px-4 py-3">AI / ML Accelerators</span>
+              <span class="skill-badge rounded-xl px-4 py-3">Systolic Architectures</span>
+              <span class="skill-badge rounded-xl px-4 py-3">Energy-Efficient & Parallel Computing</span>
+              <span class="skill-badge rounded-xl px-4 py-3">Hardware–Software Co-design</span>
+            </div>
+          </div>
+          <div class="soft-card rounded-3xl p-7">
+            <p class="section-kicker">What I Want to Explore</p>
+            <p class="text-slate-300 mt-5 leading-7">Graduate research where algorithmic efficiency and architecture meet: quantized neural networks, dataflow-aware accelerators, low-power digital design, FPGA/ASIC implementations, and embedded intelligence.</p>
+            <div class="mt-5 flex flex-wrap gap-2">
+              <span class="mono text-xs px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">quantization</span>
+              <span class="mono text-xs px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">systolic-array</span>
+              <span class="mono text-xs px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">RTL</span>
+              <span class="mono text-xs px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">FPGA</span>
+              <span class="mono text-xs px-3 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-300">ASIC</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-        });
+    <section id="publications" class="py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+          <p class="section-kicker">Research Output</p>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Conference Manuscripts</h2>
+          <p class="text-slate-400 mt-5">Two research manuscripts are currently submitted and under review.</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-6 items-start">
+          <article class="paper-card glass-card rounded-3xl reveal">
+            <div class="p-7 pl-8">
+              <div class="flex justify-between gap-4 items-start">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-widest text-blue-300">ICCIT 2026</span>
+                  <h3 class="text-xl font-bold text-white mt-2">Software-Level Dual-Shift CNN Quantization</h3>
+                </div>
+                <span class="text-[11px] px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20 whitespace-nowrap">Under Review</span>
+              </div>
+              <p class="text-slate-400 text-sm leading-6 mt-4">Investigates a two-term additive power-of-two representation at the software level, replacing multiplication with dual shift operations and addition for efficient CNN computation.</p>
+            </div>
 
-        // Scroll Reveal Effect
-        const observerOptions = {
-            threshold: 0.1
-        };
+            <!-- ICCIT ABSTRACT: replace only the paragraph inside .abstract-body when your abstract is ready. -->
+            <details class="abstract-toggle border-t border-slate-700/70 bg-slate-950/20">
+              <summary class="flex items-center justify-between gap-4 px-8 py-4 text-sm font-bold text-blue-300 hover:text-blue-200 hover:bg-slate-800/35 transition">
+                <span class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                  View Abstract
+                </span>
+                <svg class="abstract-chevron w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </summary>
+              <div class="abstract-body px-8 pb-6">
+                <div class="rounded-2xl border border-blue-500/10 bg-blue-500/[0.035] p-5">
+                  <p class="text-[11px] font-bold uppercase tracking-[.16em] text-blue-300 mb-3">Abstract</p>
+                  <p class="text-sm leading-7 text-slate-400 text-justify">Convolutional neural networks (CNNs) achieve strong image-classification performance but rely on 
+                    multiply– accumulate operations that are costly for resource-constrained hardware. This paper proposes an 8-bit dual-shift 
+                    fixed-point arithmetic design in which a signed weight is approximated by the sum or difference of two power-of-two terms.
+                     The resulting activation–weight operation uses two shifts and one addition or subtraction instead of a general multiplier. 
+                     Hardware- aware training constrains both convolutional and fully connected weights to the proposed representation through 
+                     a straight- through estimator, while a deterministic export procedure con- verts all learned parameters into FPGA-oriented 
+                     8-bit codes. The fixed-point inference path uses Q0.8 inputs and Q1.7 weights and biases. After accumulation, 
+                     the implemented fixed-offset requantization applies an 8-bit right shift in Conv1 and a 7- bit right shift in 
+                     Conv2, Conv3, FC1, and FC2. The method is evaluated using leakage-free MNIST and custom handwritten- digit test sets. 
+                     Floating-point, conventional fixed-point multipli- cation, and dual-shift inference are compared using classification 
+                     performance, weight approximation error, layer-wise activation error, and arithmetic complexity. On the combined 
+                     10,700-image test set, the floating-point, conventional integer-multiplication, and proposed dual-shift paths achieved 
+                     99.03%, 99.01%, and 99.07% accuracy, respectively, demonstrating that the multi- plierless representation preserved 
+                     classification performance.The software implementation provides integer-reference outputs for future RTL and FPGA 
+                     systolic-array verification.</p>
+                </div>
+              </div>
+            </details>
+          </article>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, observerOptions);
+          <article class="paper-card glass-card rounded-3xl reveal">
+            <div class="p-7 pl-8">
+              <div class="flex justify-between gap-4 items-start">
+                <div>
+                  <span class="text-xs font-bold uppercase tracking-widest text-emerald-300">ICECE 2026 · BUET</span>
+                  <h3 class="text-xl font-bold text-white mt-2">Knowledge-Distilled CNN for MCU Digit Prediction</h3>
+                </div>
+                <span class="text-[11px] px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20 whitespace-nowrap">Under Review</span>
+              </div>
+              <p class="text-slate-400 text-sm leading-6 mt-4">Uses knowledge distillation to obtain a compact model for MCU inference. A preprocessed image array is sent to the microcontroller, which performs digit prediction and returns the predicted digit to the host.</p>
+            </div>
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            <!-- ICECE ABSTRACT: replace only the paragraph inside .abstract-body when your abstract is ready. -->
+            <details class="abstract-toggle border-t border-slate-700/70 bg-slate-950/20">
+              <summary class="flex items-center justify-between gap-4 px-8 py-4 text-sm font-bold text-emerald-300 hover:text-emerald-200 hover:bg-slate-800/35 transition">
+                <span class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  View Abstract
+                </span>
+                <svg class="abstract-chevron w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </summary>
+              <div class="abstract-body px-8 pb-6">
+                <div class="rounded-2xl border border-emerald-500/10 bg-emerald-500/[0.035] p-5">
+                  <p class="text-[11px] font-bold uppercase tracking-[.16em] text-emerald-300 mb-3">Abstract</p>
+                  <p class="text-sm leading-7 text-slate-400 text-justify">This work presents KDQ-TinyCNN, a compact CNN for handwritten-digit 
+                    recognition on resource-constrained micro- controllers using teacher–student knowledge distillation, 
+                    dual- shift quantization-aware training (QAT), and integer deployment. A 93,322-parameter teacher achieved 99.33% 
+                        MNIST accuracy, while the 8,538-parameter student reduced parameters by 90.85%. Knowledge distillation improved 
+                        student accuracy from 96.94% to 97.90%, and QAT with teacher guidance further increased it to 98.22%. The exported 
+                        integer model achieved 98.10% accuracy on both the PC reference and STM32F103C8 Cortex-M3 implementation. 
+                        On the complete 10,000-image MNIST test set, the MCU correctly classified 9,810 images with zero communication failures. 
+                        Mean on-device inference latency was 61.956 ± 0.006 ms, providing 16.14 images/s, while the implementation 
+                        required only 20.94 KiB Flash and 6.16 KiB static SRAM. Datasheet-based power was estimated at 89.1–118.8 mW, 
+                        corresponding to 5.52– 7.36 mJ per inference. These results demonstrate that knowledge distillation, structured QAT, 
+                        memory-aware implementation, and integer arithmetic enable accurate CNN inference on a 72-MHz Cortex-M3 with highly 
+                        constrained memory.</p>
+                </div>
+              </div>
+            </details>
+          </article>
+        </div>
+      </div>
+    </section>
 
-        // ScrollSpy Logic
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
+    <section id="experience" class="py-28 bg-slate-950/55">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14 reveal">
+          <p class="section-kicker">Background</p>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Education, Experience & Leadership</h2>
+        </div>
+        <div class="grid lg:grid-cols-3 gap-8">
+          <div class="glass-card rounded-3xl p-7 reveal">
+            <h3 class="text-xl font-bold text-white mb-7">Education</h3>
+            <div class="timeline-item"><div class="timeline-dot"></div><time class="text-xs font-bold text-blue-300 uppercase">2022–2027</time><h4 class="font-bold text-white mt-1">B.Sc. in Computer Science & Engineering</h4><p class="text-sm text-slate-400 mt-1">RUET, Rajshahi, Bangladesh</p><p class="text-sm text-slate-300 mt-2"><strong>CGPA: 3.93/4.00</strong></p></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><time class="text-xs font-bold text-blue-300 uppercase">2021</time><h4 class="font-bold text-white mt-1">HSC</h4><p class="text-sm text-slate-400">GPA: 5.00/5.00</p></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><time class="text-xs font-bold text-blue-300 uppercase">2019</time><h4 class="font-bold text-white mt-1">SSC</h4><p class="text-sm text-slate-400">GPA: 5.00/5.00</p></div>
+          </div>
 
-        window.addEventListener('scroll', () => {
-            let current = "";
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
-                }
-            });
+          <div class="glass-card rounded-3xl p-7 reveal">
+            <h3 class="text-xl font-bold text-white mb-7">Technical & Academic Experience</h3>
+            <div class="timeline-item"><div class="timeline-dot" style="background:#34d399"></div><time class="text-xs font-bold text-emerald-300 uppercase">23 Feb – 6 Mar 2026</time><h4 class="font-bold text-white mt-1">VLSI Design Trainee</h4><p class="text-sm text-slate-400 mt-1">Neural Semiconductor Limited, Dhaka</p><p class="text-sm text-slate-500 mt-2 leading-6">Cadence-based exposure to RTL design, functional verification, layout concepts, DRC/LVS, and silicon design constraints.</p></div>
+            <div class="timeline-item"><div class="timeline-dot" style="background:#34d399"></div><time class="text-xs font-bold text-emerald-300 uppercase">Sep 2022 – Present</time><h4 class="font-bold text-white mt-1">Teaching Assistant & Academic Script Evaluator</h4><p class="text-sm text-slate-400 mt-1">Private Educational Organization</p><p class="text-sm text-slate-500 mt-2 leading-6">Supports academic instruction and has evaluated <strong class="text-slate-300">13,000+</strong> school-level STEM examination scripts using structured rubrics and written performance feedback. Also provides one-to-one personalized tutoring in Physics, Mathematics, and IT-related subjects.</p></div>
+          </div>
 
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
-            });
-        });
+          <div class="glass-card rounded-3xl p-7 reveal">
+            <h3 class="text-xl font-bold text-white mb-7">Honors & Leadership</h3>
+            <div class="space-y-4">
+              <div class="soft-card rounded-2xl p-5"><span class="text-xs text-violet-300 font-bold uppercase">Academic Recognition · 2023</span><h4 class="text-white font-bold mt-1">Student of the Year Award — 2nd Academic Year</h4><p class="text-sm text-slate-500 mt-2">Academic recognition during undergraduate study at RUET.</p></div>
+              <div class="soft-card rounded-2xl p-5"><span class="text-xs text-violet-300 font-bold uppercase">Leadership · 2024</span><h4 class="text-white font-bold mt-1">Class Representative Appreciation — 3rd Academic Year</h4><p class="text-sm text-slate-500 mt-2">Recognition for class representation, communication, and academic coordination.</p></div>
+              <a href="#achievements" class="soft-card rounded-2xl p-5 block hover:border-blue-500/40 transition"><span class="text-xs text-blue-300 font-bold uppercase">Photo Gallery</span><h4 class="text-white font-bold mt-1">View Achievements & Milestones</h4><p class="text-sm text-slate-500 mt-2">Academic awards, leadership recognition, and selected personal achievements with photos.</p></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        
-        // 1. Create a browser-safe function to "save" the file
-        function saveContactInfo(name, email, message) {
-            // Format the text exactly how you want it
-            const textToSave = `Name: ${name} | Email: ${email} | Message: ${message}\n`;
 
-            // Create a Blob (a temporary file in the browser's memory)
-            const blob = new Blob([textToSave], { type: 'text/plain' });
+    <!-- ACHIEVEMENTS PHOTO GALLERY
+         To add more items later, edit only the `achievements` array near the bottom of this file.
+         Put your photos in the `achievements/` folder and reference the filename there. -->
+    <section id="achievements" class="py-28 bg-slate-950/70 relative overflow-hidden">
+      <div class="absolute inset-0 research-grid opacity-50 pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+          <p class="section-kicker">Beyond the Transcript</p>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Achievements & Milestones</h2>
+          <p class="text-slate-400 mt-5 leading-7">Selected academic, leadership, and personal milestones. Click any card to view its photo at a larger size.</p>
+        </div>
+        <div id="achievement-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
 
-            // Create a link to download the file and click it automatically
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'contacts.txt'; 
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
+    <!-- TRAINING CERTIFICATES
+         To add certificates later, edit only the `trainingCertificates` array near the bottom.
+         Put certificate images in the `training/` folder. -->
+    <section id="training" class="py-28 bg-slate-900/45 relative overflow-hidden">
+      <div class="absolute inset-0 research-grid opacity-35 pointer-events-none"></div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center max-w-3xl mx-auto mb-14 reveal">
+          <p class="section-kicker">Professional Development</p>
+          <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Training Certificates</h2>
+          <p class="text-slate-400 mt-5 leading-7">Selected technical training and professional-development certificates. Click a certificate card to view the document at a larger size.</p>
+        </div>
+        <div id="training-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+    </section>
 
-        // --- Form Submission ---
-        document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Stop page from refreshing
-            
-            // Get values from the form
-            const nameValue = document.getElementById('your_name').value;
-            const emailValue = document.getElementById('email').value;
-            const messageValue = document.getElementById('message').value;
-            
-            // Call the safe save function (This will prompt a download)
-            saveContactInfo(nameValue, emailValue, messageValue);
-            
-            // Display success message
-            const msg = document.getElementById('form-message'); // Make sure you have an element with id="msg"
-            msg.textContent = "Thank you, " + nameValue + ". Message is sent successfully.";
-            msg.className = "mt-6 text-center p-4 rounded-xl bg-blue-500/10 text-blue-400 block";
-            
-            // Clear the form
-            this.reset();
-            setTimeout(() => msg.className = "hidden", 5000);
-        });
+    <section id="skills" class="py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14 reveal"><p class="section-kicker">Technical Toolkit</p><h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Skills</h2></div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
+          <div class="glass-card p-6 rounded-3xl"><h3 class="font-bold text-white">HDL & Digital Design</h3><div class="flex flex-wrap gap-2 mt-4"><span class="skill-badge px-3 py-2 rounded-lg text-sm">Verilog HDL</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">RTL Design</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Digital Logic</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Systolic Arrays</span></div></div>
+          <div class="glass-card p-6 rounded-3xl"><h3 class="font-bold text-white">Programming</h3><div class="flex flex-wrap gap-2 mt-4"><span class="skill-badge px-3 py-2 rounded-lg text-sm">C</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">C++</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Python</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Java</span></div></div>
+          <div class="glass-card p-6 rounded-3xl"><h3 class="font-bold text-white">VLSI / EDA</h3><div class="flex flex-wrap gap-2 mt-4"><span class="skill-badge px-3 py-2 rounded-lg text-sm">Cadence</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Vivado</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">KiCad</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Logisim Evolution</span></div></div>
+          <div class="glass-card p-6 rounded-3xl"><h3 class="font-bold text-white">Embedded Systems</h3><div class="flex flex-wrap gap-2 mt-4"><span class="skill-badge px-3 py-2 rounded-lg text-sm">STM32F103</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">UART</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Embedded C</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Arduino</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Keil µVision</span></div></div>
+          <div class="glass-card p-6 rounded-3xl"><h3 class="font-bold text-white">Machine Learning</h3><div class="flex flex-wrap gap-2 mt-4"><span class="skill-badge px-3 py-2 rounded-lg text-sm">TensorFlow</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">PyTorch</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Scikit-learn</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">NumPy</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Pandas</span></div></div>
+          <div class="glass-card p-6 rounded-3xl"><h3 class="font-bold text-white">Development & Visualization</h3><div class="flex flex-wrap gap-2 mt-4"><span class="skill-badge px-3 py-2 rounded-lg text-sm">VS Code</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Proteus</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Django</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Matplotlib</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Plotly</span><span class="skill-badge px-3 py-2 rounded-lg text-sm">Gradio</span></div></div>
+        </div>
+      </div>
+    </section>
 
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-    </script>
+    <section id="projects" class="py-28 bg-slate-950/55">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14 reveal"><p class="section-kicker">Selected Engineering Work</p><h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Projects</h2><p class="text-slate-400 mt-5">Projects are presented in order of relevance to my current research direction.</p></div>
+        <div class="grid md:grid-cols-2 gap-6">
+          <article class="glass-card rounded-3xl p-7 reveal group hover:-translate-y-1 transition-transform">
+            <div class="flex justify-between items-start gap-4"><div><span class="text-xs font-bold uppercase tracking-widest text-blue-300">Embedded Systems · CNN</span><h3 class="text-2xl font-bold text-white mt-2">Handwritten Digit Recognition using STM32 and UART</h3></div><span class="mono text-[10px] bg-slate-900 border border-slate-700 px-2 py-1 rounded">98.2%</span></div>
+            <p class="text-sm text-slate-400 leading-6 mt-4">Developed a TensorFlow CNN using standard and custom handwritten-digit datasets, achieving 98.2% classification accuracy. TensorFlow's <code class="mono text-blue-300">predict()</code> function performs classification on the host; the predicted digit is sent via UART to an STM32, which displays the result on a 7-segment display through embedded C and custom digital interfacing.</p>
+            <div class="flex flex-wrap gap-2 mt-5"><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">TensorFlow</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Python</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">STM32</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">UART</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Embedded C</span></div>
+            <a href="https://github.com/asadaladil/CSE_3200_Project-STM32" target="_blank" rel="noopener" class="inline-flex items-center mt-6 text-blue-300 hover:text-blue-200 font-bold">View Repository <span class="ml-2">→</span></a>
+          </article>
+
+          <article class="glass-card rounded-3xl p-7 reveal group hover:-translate-y-1 transition-transform">
+            <span class="text-xs font-bold uppercase tracking-widest text-emerald-300">Machine Learning</span><h3 class="text-2xl font-bold text-white mt-2">Medical Charges Predictor</h3>
+            <p class="text-sm text-slate-400 leading-6 mt-4">Built and deployed an end-to-end machine-learning application using Gradient Boosting, data preprocessing, feature engineering, hyperparameter tuning, cross-validation, and a Gradio interface hosted on Hugging Face.</p>
+            <div class="flex flex-wrap gap-2 mt-5"><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Gradient Boosting</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Scikit-learn</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Gradio</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Hugging Face</span></div>
+            <a href="https://huggingface.co/spaces/asadaladil/Medical-Charges-Predictor" target="_blank" rel="noopener" class="inline-flex items-center mt-6 text-emerald-300 hover:text-emerald-200 font-bold">View Live App <span class="ml-2">→</span></a>
+          </article>
+
+          <article class="glass-card rounded-3xl p-7 reveal group hover:-translate-y-1 transition-transform">
+            <span class="text-xs font-bold uppercase tracking-widest text-violet-300">Full-Stack Development</span><h3 class="text-2xl font-bold text-white mt-2">MyExpense Web Application</h3>
+            <p class="text-sm text-slate-400 leading-6 mt-4">Developed a Django-based personal finance platform with authentication, categorized expense records, relational SQLite data models, analytical reporting, and optimized database queries.</p>
+            <div class="flex flex-wrap gap-2 mt-5"><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Django</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">SQLite</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Bootstrap</span></div>
+            <a href="https://github.com/asadaladil/CSE-3100-Project" target="_blank" rel="noopener" class="inline-flex items-center mt-6 text-violet-300 hover:text-violet-200 font-bold">View Repository <span class="ml-2">→</span></a>
+          </article>
+
+          <article class="glass-card rounded-3xl p-7 reveal group hover:-translate-y-1 transition-transform">
+            <span class="text-xs font-bold uppercase tracking-widest text-amber-300">Mobile Development</span><h3 class="text-2xl font-bold text-white mt-2">Android Expense Tracker</h3>
+            <p class="text-sm text-slate-400 leading-6 mt-4">Built a Java/Android Studio expense-tracking application with persistent local storage and interfaces for reviewing and visualizing monthly financial records.</p>
+            <div class="flex flex-wrap gap-2 mt-5"><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Java</span><span class="skill-badge px-3 py-1.5 rounded-lg text-xs">Android Studio</span></div>
+            <a href="https://github.com/asadaladil/Android/tree/main/ExpenseTracker" target="_blank" rel="noopener" class="inline-flex items-center mt-6 text-amber-300 hover:text-amber-200 font-bold">View Repository <span class="ml-2">→</span></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-24" id="references">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 reveal"><p class="section-kicker">Academic References</p><h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-3">Faculty Contacts</h2></div>
+        <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div class="glass-card rounded-2xl p-6 reveal"><h3 class="font-bold text-white text-lg">Dr. Md. Nazrul Islam Mondal</h3><p class="text-slate-400 mt-1">Professor, Department of CSE, RUET</p><a class="inline-block mt-3 text-blue-300 hover:text-blue-200" href="mailto:nimbd109@gmail.com">mondal@cse.ruet.ac.bd</a></div>
+          <div class="glass-card rounded-2xl p-6 reveal"><h3 class="font-bold text-white text-lg">Nahin Ul Sadad</h3><p class="text-slate-400 mt-1">Assistant Professor, Department of CSE, RUET</p><a class="inline-block mt-3 text-blue-300 hover:text-blue-200" href="mailto:nahinsd100@gmail.com">nahin@cse.ruet.ac.bd</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="py-28 bg-slate-950/70">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="glass-card rounded-[2rem] p-7 sm:p-12 reveal">
+          <div class="grid lg:grid-cols-[1fr_.9fr] gap-10 items-start">
+            <div>
+              <p class="section-kicker">Contact</p>
+              <h2 class="text-3xl sm:text-5xl font-extrabold text-white mt-3">Interested in working together?</h2>
+              <p class="text-slate-400 mt-5 leading-7">I am interested in Master's research opportunities and collaborations in VLSI, AI hardware acceleration, FPGA/ASIC systems, quantization, and computer architecture.</p>
+              <div class="mt-7 space-y-3 text-sm">
+                <a href="mailto:adilasadals@gmail.com" class="flex items-center gap-3 text-slate-300 hover:text-blue-300"><span class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 grid place-items-center">✉</span> adilasadals@gmail.com</a>
+                <a href="https://github.com/asadaladil" target="_blank" rel="noopener" class="flex items-center gap-3 text-slate-300 hover:text-blue-300"><span class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 grid place-items-center">GH</span> github.com/asadaladil</a>
+                <a href="https://www.linkedin.com/in/md-asad-al-adil-a42394252/" target="_blank" rel="noopener" class="flex items-center gap-3 text-slate-300 hover:text-blue-300"><span class="w-9 h-9 rounded-xl bg-blue-500/10 border border-blue-500/20 grid place-items-center">in</span> LinkedIn · Md. Asad-Al-Adil</a>
+                <button id="copy-wechat" type="button" class="w-full text-left flex items-center gap-3 text-slate-300 hover:text-emerald-300"><span class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 grid place-items-center">微</span><span>WeChat: <span class="mono">wxid_mz2ibszcy6ih22</span> <span id="wechat-status" class="text-xs text-slate-500 ml-2">click to copy</span></span></button>
+                <div class="flex items-center gap-3 text-slate-400"><span class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 grid place-items-center">⌖</span> Rajshahi, Bangladesh</div>
+              </div>
+            </div>
+
+            <form id="contact-form" class="soft-card rounded-2xl p-6 space-y-4">
+              <div><label for="your_name" class="text-xs uppercase tracking-widest text-slate-500 font-bold">Your name</label><input id="your_name" type="text" required class="mt-2 w-full px-4 py-3 bg-slate-950/70 border border-slate-700 rounded-xl text-white focus:border-blue-500 outline-none" placeholder="Professor / Researcher name"></div>
+              <div><label for="your_email" class="text-xs uppercase tracking-widest text-slate-500 font-bold">Your email</label><input id="your_email" type="email" required class="mt-2 w-full px-4 py-3 bg-slate-950/70 border border-slate-700 rounded-xl text-white focus:border-blue-500 outline-none" placeholder="you@university.edu"></div>
+              <div><label for="message" class="text-xs uppercase tracking-widest text-slate-500 font-bold">Message</label><textarea id="message" rows="5" required class="mt-2 w-full px-4 py-3 bg-slate-950/70 border border-slate-700 rounded-xl text-white focus:border-blue-500 outline-none" placeholder="Research opportunity, collaboration, or question..."></textarea></div>
+              <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-emerald-600 text-white font-bold hover:opacity-90 transition">Open Email Draft</button>
+              <p class="text-xs text-slate-500 leading-5">This opens your email application with the message pre-filled. No form data is stored by this website.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <!-- Achievement image lightbox -->
+  <div id="achievement-modal" class="hidden-modal fixed inset-0 z-[90] bg-slate-950/90 backdrop-blur-md p-4 sm:p-8 flex items-center justify-center" aria-hidden="true">
+    <button id="achievement-modal-close" type="button" aria-label="Close achievement photo" class="absolute top-5 right-5 w-11 h-11 rounded-full bg-slate-900/90 border border-slate-700 text-slate-300 hover:text-white text-2xl">&times;</button>
+    <div class="max-w-5xl w-full max-h-[92vh] overflow-auto glass-card rounded-3xl p-4 sm:p-6">
+      <img id="achievement-modal-image" src="" alt="" class="w-full max-h-[70vh] object-contain rounded-2xl bg-slate-950">
+      <div class="pt-5 px-1">
+        <div class="flex flex-wrap items-center gap-3"><span id="achievement-modal-category" class="text-xs font-bold uppercase tracking-widest text-blue-300"></span><span id="achievement-modal-year" class="text-xs px-2.5 py-1 rounded-full bg-slate-800 text-slate-400"></span></div>
+        <h3 id="achievement-modal-title" class="text-2xl font-bold text-white mt-2"></h3>
+        <p id="achievement-modal-description" class="text-slate-400 mt-3 leading-7"></p>
+      </div>
+    </div>
+  </div>
+
+
+  <footer class="py-10 border-t border-slate-800 text-center">
+    <div class="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm mb-4">
+      <a href="https://github.com/asadaladil" class="text-slate-500 hover:text-blue-300">GitHub</a>
+      <a href="https://www.linkedin.com/in/md-asad-al-adil-a42394252/" class="text-slate-500 hover:text-blue-300">LinkedIn</a>
+      <a href="mailto:adilasadals@gmail.com" class="text-slate-500 hover:text-blue-300">Email</a>
+      <a href="#research" class="text-slate-500 hover:text-blue-300">Research</a>
+      <a href="#achievements" class="text-slate-500 hover:text-blue-300">Achievements</a>
+      <a href="#training" class="text-slate-500 hover:text-blue-300">Training</a>
+    </div>
+    <p class="text-slate-600 text-[10px] tracking-[.18em] uppercase">© <span id="current-year"></span> MD. ASAD-AL-ADIL · Rajshahi, Bangladesh</p>
+  </footer>
+
+  <script>
+    // ------------------------------------------------------------------
+    // ACHIEVEMENTS: EDIT THIS ARRAY WHEN YOU WANT TO ADD/CHANGE A PHOTO.
+    // 1) Put the image in: achievements/your-photo.jpg
+    // 2) Copy one object below and change its fields.
+    // 3) Optional: add `link: "https://..."` if you want a certificate/event link.
+    // ------------------------------------------------------------------
+    const achievements = [
+      {
+        category: 'Academic Recognition',
+        year: '2023',
+        title: 'Student of the Year Award — 2nd Academic Year',
+        description: 'Recognition received during my undergraduate study at RUET for the second academic year.',
+        image: 'SOTY.jpg',
+        alt: 'Student of the Year Award, second academic year, 2023'
+      },
+      {
+        category: 'Leadership',
+        year: '2024',
+        title: 'Class Representative Appreciation — 3rd Academic Year',
+        description: 'Appreciation for serving as class representative and supporting communication and academic coordination during the third academic year.',
+        image: 'CR.jpg',
+        alt: 'Class Representative appreciation, third academic year, 2024'
+      },
+      {
+        category: 'Strength Training & Fitness',
+        year: '2024',
+        title: '5th Place — Mr. Rajshahi Competition',
+        description: 'Placed 5th in the Mr. Rajshahi Competition 2024 after approximately six years of consistent strength training and fitness practice.',
+        image: 'GYM.jpg',
+        alt: 'Mr. Rajshahi Competition 2024 achievement photo'
+      }
+    ];
+
+    // ------------------------------------------------------------------
+    // TRAINING CERTIFICATES: EDIT THIS ARRAY TO ADD/CHANGE CERTIFICATES.
+    // 1) Put the certificate image in: training/your-certificate.jpg
+    // 2) Copy one object below and change its fields.
+    // 3) `issuer` and `year` are shown on the card.
+    // ------------------------------------------------------------------
+    const trainingCertificates = [
+      {
+        category: 'VLSI Training',
+        year: '2026',
+        title: 'Digital VLSI Design Training',
+        issuer: 'Neural Semiconductor Limited',
+        description: 'Hands-on training covering Cadence-based RTL design, functional verification, physical-layout concepts, DRC/LVS, and fabrication-oriented design constraints.',
+        image: 'NSL.jpg',
+        alt: 'Digital VLSI Design Training certificate, Neural Semiconductor Limited, 2026'
+      }
+    ];
+
+    const fallbackAchievementImage = 'https://placehold.co/1000x750/172033/93c5fd?text=Add+Photo';
+    const achievementGrid = document.getElementById('achievement-grid');
+    const trainingGrid = document.getElementById('training-grid');
+    const achievementModal = document.getElementById('achievement-modal');
+    const modalImage = document.getElementById('achievement-modal-image');
+    const modalCategory = document.getElementById('achievement-modal-category');
+    const modalYear = document.getElementById('achievement-modal-year');
+    const modalTitle = document.getElementById('achievement-modal-title');
+    const modalDescription = document.getElementById('achievement-modal-description');
+
+    function openGalleryItem(item) {
+      modalImage.src = item.image;
+      modalImage.alt = item.alt || item.title;
+      modalImage.onerror = () => { modalImage.onerror = null; modalImage.src = fallbackAchievementImage; };
+      modalCategory.textContent = item.issuer ? `${item.category} · ${item.issuer}` : item.category;
+      modalYear.textContent = item.year;
+      modalTitle.textContent = item.title;
+      modalDescription.textContent = item.description;
+      achievementModal.classList.remove('hidden-modal');
+      achievementModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function openAchievement(index) { openGalleryItem(achievements[index]); }
+    function openTraining(index) { openGalleryItem(trainingCertificates[index]); }
+
+    function closeAchievement() {
+      achievementModal.classList.add('hidden-modal');
+      achievementModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    achievements.forEach((item, index) => {
+      const card = document.createElement('article');
+      card.className = 'achievement-card glass-card rounded-3xl reveal group hover:-translate-y-1 transition-transform';
+      card.innerHTML = `
+        <button type="button" class="w-full text-left" aria-label="View ${item.title}">
+          <div class="achievement-photo relative">
+            <img src="${item.image}" alt="${item.alt || item.title}" loading="lazy">
+            <div class="achievement-shine"></div>
+            <span class="achievement-year px-3 py-1.5 rounded-full text-xs font-bold text-slate-200">${item.year}</span>
+            <div class="absolute left-5 right-5 bottom-4 z-[2]">
+              <span class="text-[10px] font-bold uppercase tracking-[.16em] text-blue-200">${item.category}</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white leading-snug">${item.title}</h3>
+            <p class="text-sm text-slate-500 leading-6 mt-3">${item.description}</p>
+            <span class="inline-flex items-center mt-5 text-sm font-bold text-blue-300 group-hover:text-blue-200">View photo <span class="ml-2 group-hover:translate-x-1 transition-transform">→</span></span>
+          </div>
+        </button>`;
+      const img = card.querySelector('img');
+      img.addEventListener('error', () => { img.src = fallbackAchievementImage; });
+      card.querySelector('button').addEventListener('click', () => openAchievement(index));
+      achievementGrid.appendChild(card);
+      card.classList.add('active');
+    });
+
+    trainingCertificates.forEach((item, index) => {
+      const card = document.createElement('article');
+      card.className = 'achievement-card glass-card rounded-3xl reveal group hover:-translate-y-1 transition-transform';
+      card.innerHTML = `
+        <button type="button" class="w-full text-left" aria-label="View ${item.title}">
+          <div class="achievement-photo relative">
+            <img src="${item.image}" alt="${item.alt || item.title}" loading="lazy">
+            <div class="achievement-shine"></div>
+            <span class="achievement-year px-3 py-1.5 rounded-full text-xs font-bold text-slate-200">${item.year}</span>
+            <div class="absolute left-5 right-5 bottom-4 z-[2]">
+              <span class="text-[10px] font-bold uppercase tracking-[.16em] text-emerald-200">${item.category}</span>
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white leading-snug">${item.title}</h3>
+            <p class="text-xs font-semibold text-emerald-300 mt-2">${item.issuer}</p>
+            <p class="text-sm text-slate-500 leading-6 mt-3">${item.description}</p>
+            <span class="inline-flex items-center mt-5 text-sm font-bold text-emerald-300 group-hover:text-emerald-200">View certificate <span class="ml-2 group-hover:translate-x-1 transition-transform">→</span></span>
+          </div>
+        </button>`;
+      const img = card.querySelector('img');
+      img.addEventListener('error', () => { img.src = fallbackAchievementImage; });
+      card.querySelector('button').addEventListener('click', () => openTraining(index));
+      trainingGrid.appendChild(card);
+      card.classList.add('active');
+    });
+
+    document.getElementById('achievement-modal-close').addEventListener('click', closeAchievement);
+    achievementModal.addEventListener('click', e => { if (e.target === achievementModal) closeAchievement(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAchievement(); });
+
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    document.querySelectorAll('.mobile-nav-link').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const sections = document.querySelectorAll('main section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    window.addEventListener('scroll', () => {
+      let current = 'home';
+      sections.forEach(section => { if (window.scrollY >= section.offsetTop - 180) current = section.id; });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      document.getElementById('scroll-progress').style.width = (height > 0 ? (window.scrollY / height) * 100 : 0) + '%';
+    }, { passive:true });
+
+    document.getElementById('copy-wechat').addEventListener('click', async () => {
+      const id = 'wxid_mz2ibszcy6ih22';
+      const status = document.getElementById('wechat-status');
+      try {
+        await navigator.clipboard.writeText(id);
+        status.textContent = 'copied';
+        status.className = 'text-xs text-emerald-400 ml-2';
+        setTimeout(() => { status.textContent = 'click to copy'; status.className = 'text-xs text-slate-500 ml-2'; }, 1800);
+      } catch {
+        status.textContent = id;
+      }
+    });
+
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('your_name').value.trim();
+      const email = document.getElementById('your_email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const subject = encodeURIComponent('Research / Collaboration Inquiry for Md. Asad-Al-Adil');
+      const body = encodeURIComponent(`Hello Asad-Al-Adil,\n\n${message}\n\nBest regards,\n${name}\n${email}`);
+      window.location.href = `mailto:adilasadals@gmail.com?subject=${subject}&body=${body}`;
+    });
+
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
